@@ -1,0 +1,133 @@
+ <!doctype html>
+<html>
+<head>
+    <title>Reaction Tester</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+    
+    <style>
+    
+    	#box {
+    		background-color: red;
+    		height: 200px;
+    		width: 200px;
+    		display: none;
+    	}
+    	p {
+    		float: left;
+    		margin-right: 15px;
+    	}
+    	.clear {
+    		clear: both;
+    	}
+    	#time, #high {
+    		font-weight: bold;
+    	}
+    
+    </style>
+</head>
+
+<body>
+	
+	<p>Latest time: <span id="time"></span> seconds</p>
+	<p>Highscore: <span id="high"></span> seconds</p>
+	
+	<div class="clear"></div>
+	
+	<div id="box"></div>
+
+	<script type="text/javascript">
+	
+		var box = document.getElementById("box"); var highscore = 5;
+		var randomTime; var randomColor; var randomShape; var randomPositon; var randomPosition2;
+		var clickedTime; var createdTime; var reactionTime;
+		var colour = ["red", "blue", "yellow", "green"];
+		var borderRadius = ["0", "100px"];
+		var horizontalPosition = ["200px", "400px", "600px", "800px", "1000px"];
+		var verticalPosition = ["0", "300px"];
+		
+		function chooseColor() {
+		
+			randomColor = Math.random()*4; randomColor = Math.floor(randomColor);
+			
+			box.style.background = colour[randomColor];
+		
+		}
+		
+		function chooseShape() {
+		
+			randomShape = Math.random()*2; randomShape= Math.floor(randomShape);
+		
+			box.style.borderRadius = borderRadius[randomShape];
+		
+		}
+		
+		function choosePosition() {
+		
+			randomPosition = Math.random()*5; randomPosition= Math.floor(randomPosition);
+		
+			box.style.marginLeft = horizontalPosition[randomPosition];
+		
+		}
+		
+		function choosePosition2() {
+		
+			randomPosition2 = Math.random()*2; randomPosition2= Math.floor(randomPosition2);
+			
+			box.style.marginTop = verticalPosition[randomPosition2];
+		
+		}
+		
+		function makeBox() {
+		
+			randomTime = Math.random();
+			
+			randomTime = randomTime*2001;
+			
+			setTimeout(function() {
+			
+				box.style.display="block";
+				
+				chooseColor();
+				
+				chooseShape();
+				
+				choosePosition();
+				
+				choosePosition2();
+				
+				createdTime = Date.now();
+		
+			}, randomTime);
+		
+		}
+		
+		box.onclick=function() {
+		
+			clickedTime = Date.now();
+			
+			reactionTime = (clickedTime-createdTime)/1000;
+		
+			document.getElementById("time").innerHTML = reactionTime;
+			
+			if (reactionTime<highscore) {
+			
+				highscore = reactionTime;
+				document.getElementById("high").innerHTML = highscore;
+			
+			}
+		
+			this.style.display="none";
+			
+			makeBox();
+			
+		}
+				
+		makeBox();
+		
+	</script>
+	
+</body>
+</html>
